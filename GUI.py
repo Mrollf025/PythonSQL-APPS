@@ -88,7 +88,7 @@ class GameAdderGUI:
         
 
         #adjust column width
-        for col in ("ID","Title", "Genre", "Console", "Company", "Region", "Year", "Played"):
+        for col in ("ID","Title","Played", "Genre", "Console","Completed", "Publisher","Company","Year","Region"):
             self.tree.column(col, width=100, anchor="center")
 
         #scrollbar for tree view
@@ -136,15 +136,9 @@ class GameAdderGUI:
 
         if not self.submited_title or not selected_genre_name or not selected_console_name \
         or not selected_company_name or not selected_region_name or not (self.submited_year.isdigit() and len(self.submited_year) == 4):
-            messagebox.showerror( "Error:", "You are missing a field")
+            messagebox.showerror( "Error", "You are missing a field")
             return
-
-        if self.submited_year.isdigit() and len(self.submited_year) == 4:
-           self.insert_game()
-        else:
-            print("Invalid year")
-            messagebox.showerror("Invalid Year", "Please enter a 4-digit numeric year.")
-        pass    
+        self.insert_game()
 
     def insert_game(self):
          #valid year
@@ -162,11 +156,14 @@ class GameAdderGUI:
             
             self.sql.insert_game(self.submited_title, self.submited_genre, self.submited_console,
                                  self.submited_company,self.submited_region, year_value, self.submited_played)
-            messagebox.showinfo("Game Added","The game was added succefully")
+            messagebox.showinfo("Game Added","The game was added successfully")
             self.sql.list_games()
             self.refresh_game_tree()
+            self.clear_fields()
 
-            #clear the form fields
+            
+    def clear_fields(self):
+        #clear the form fields
             self.title_entry.delete(0,tk.END)
             self.genre_var.set('')
             self.console_var.set('')
