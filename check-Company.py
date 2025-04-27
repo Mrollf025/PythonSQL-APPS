@@ -119,8 +119,9 @@ def compare_comp_dataframes():
 
     unique_values = list(set(csv_list)- set(comp_names))
     return unique_values
+
+
         
 if __name__ == "__main__":
     print(app.list_company())
-    print(compare_comp_dataframes())
-
+    print('Mising Companies:',compare_comp_dataframes())
